@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vita | Personalized Performance Guidance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-obsidian: #0A0A0B;
+            --brand-slate: #1C1C1E;
+            --brand-accent: #FFFFFF;
+            --brand-muted: #8E8E93;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--brand-obsidian);
+            color: white;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 0.01em; 
+            line-height: 1.1;
+        }
+        .brand-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            font-style: italic;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .cta-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+        input::placeholder {
+            color: #636366;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #fff 20%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .spaced-header {
+            letter-spacing: 0.02em;
+            line-height: 1.2;
+        }
+        /* Slider Styles */
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 20px 10px; /* Added padding to prevent hover clip */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 px-6 py-6 flex justify-between items-center bg-black/50 backdrop-blur-md border-b border-white/5">
+        <div class="text-3xl brand-text uppercase">VITA</div>
+        <div>
+            <a href="#early-access" class="text-xs font-bold tracking-widest uppercase border border-white/20 px-6 py-2.5 rounded-full hover:bg-white hover:text-black transition-all">Join the Beta</a>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 px-6 text-center overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] -z-10 top-1/4"></div>
+        
+        <div class="max-w-5xl mx-auto">
+            <!-- Adjusted top margin (mt-12) -->
+            <div class="mb-6 mt-12 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] md:text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">
+                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> Personal Performance Architecture
+            </div>
+            <h1 class="text-6xl md:text-9xl font-black mb-8 spaced-header uppercase">
+                OWN YOUR ENERGY.<br><span class="gradient-text">MASTER YOUR LIFE.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                <span class="text-white font-semibold italic">Vita</span> is the personalized guidance system that translates your body's signals into one simple, elite daily plan.
+            </p>
+
+            <form onsubmit="return false;" class="flex flex-col md:flex-row gap-3 w-full max-w-lg mx-auto mb-6" id="early-access">
+                <input type="email" placeholder="Enter your email address" required
+                    class="flex-1 bg-white/5 border border-white/10 px-6 py-5 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-white/20 transition-all">
+                <button type="submit" 
+                    class="cta-button bg-white text-black font-black px-10 py-5 rounded-2xl text-lg whitespace-nowrap uppercase tracking-tight">
+                    Start with Vita
+                </button>
+            </form>
+            <p class="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold text-center">Secure your place in the 2026 performance cohort.</p>
+        </div>
+    </section>
+
+    <!-- 2. Problem Section -->
+    <section class="py-32 px-6 bg-white text-black text-left">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-5xl md:text-7xl font-black mb-12 spaced-header uppercase">Generic advice is<br>the enemy of elite.</h2>
+            <div class="grid md:grid-cols-2 gap-12 text-lg md:text-xl text-gray-800 leading-relaxed">
+                <div class="space-y-6">
+                    <p>The fitness world is saturated with "standardized" health protocols. You follow the same 10,000-step goals as everyone else, yet you still feel stagnant.</p>
+                </div>
+                <div class="space-y-6">
+                    <p>You aren't average, so why is your guidance? <span class="font-bold text-black italic">Vita</span> eliminates the guesswork. We bridge the gap between "what works for them" and "what works for you."</p>
+                </div>
+            </div>
+            <div class="mt-16 border-t border-black/10 pt-10">
+                <p class="text-2xl font-bold italic">Stop trying to fit into a template. Build a protocol that fits your biology.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. How It Works (Hover cards) -->
+    <section class="py-32 px-6 bg-zinc-900/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold mb-20 text-center uppercase spaced-header">The Vita System</h2>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="relative p-8 glass-card rounded-3xl group cursor-default">
+                    <div class="absolute -top-10 left-8 text-8xl font-black text-white/5 italic transition-colors group-hover:text-white/10">01</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-6 uppercase tracking-tight">Sync Vitals</h3>
+                    <p class="text-gray-400 group-hover:text-gray-300 transition-colors">Vita integrates with your wearables to monitor your nervous system in real-time.</p>
+                </div>
+                <div class="relative p-8 glass-card rounded-3xl group cursor-default">
+                    <div class="absolute -top-10 left-8 text-8xl font-black text-white/5 italic transition-colors group-hover:text-white/10">02</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-6 uppercase tracking-tight">Get Plan</h3>
+                    <p class="text-gray-400 group-hover:text-gray-300 transition-colors">We filter the noise. Every morning, you receive one clear protocol for the day ahead.</p>
+                </div>
+                <div class="relative p-8 glass-card rounded-3xl group cursor-default">
+                    <div class="absolute -top-10 left-8 text-8xl font-black text-white/5 italic transition-colors group-hover:text-white/10">03</div>
+                    <h3 class="text-2xl font-bold mb-4 mt-6 uppercase tracking-tight">Perform</h3>
+                    <p class="text-gray-400 group-hover:text-gray-300 transition-colors">Execute with precision. No more guessing. Just data-backed action.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Testimonials Slider -->
+    <section class="py-32 px-6 overflow-hidden">
+        <div class="max-w-4xl mx-auto relative">
+            <div class="mb-12 text-center md:text-left">
+                <h2 class="text-4xl md:text-6xl font-black mb-4 uppercase spaced-header">The Beta Report.</h2>
+                <p class="text-gray-400 font-medium uppercase tracking-widest text-sm">Real feedback. Zero fluff.</p>
+            </div>
+
+            <!-- Slider Wrapper -->
+            <div class="overflow-hidden mb-8">
+                <div class="testimonial-container" id="testimonialContainer">
+                    
+                    <!-- Slide 1 -->
+                    <div class="testimonial-slide">
+                        <div class="glass-card p-10 rounded-3xl h-full cursor-default">
+                            <p class="text-xl md:text-2xl text-gray-200 mb-8 italic leading-relaxed font-light">
+                                "I’ve had a Whoop for years, but I never actually changed my behavior because of it. <span class="text-white font-semibold">Vita</span> is the first thing that just told me, 'Hey, your recovery is low, skip the HIIT today.' That clarity is what I was missing."
+                            </p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold uppercase">JD</div>
+                                <div>
+                                    <p class="text-sm font-bold uppercase tracking-widest">James D.</p>
+                                    <p class="text-xs text-gray-500 font-bold uppercase">Founder</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 (Brief) -->
+                    <div class="testimonial-slide">
+                        <div class="glass-card p-10 rounded-3xl h-full flex flex-col justify-center cursor-default">
+                            <p class="text-2xl md:text-4xl text-white mb-8 italic font-bold leading-tight uppercase tracking-tighter">
+                                "Finally, data that actually makes sense. My afternoon focus has doubled."
+                            </p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold uppercase">SK</div>
+                                <div>
+                                    <p class="text-sm font-bold uppercase tracking-widest">Sarah K.</p>
+                                    <p class="text-xs text-gray-500 font-bold uppercase">Creative Director</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="testimonial-slide">
+                        <div class="glass-card p-10 rounded-3xl h-full cursor-default">
+                            <p class="text-xl md:text-2xl text-gray-200 mb-8 italic leading-relaxed font-light">
+                                "Used to spend 20 minutes looking at sleep graphs without knowing what it meant. Now I get a 3-sentence instruction in the morning and I'm done. I feel 10x better daily."
+                            </p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold uppercase">MS</div>
+                                <div>
+                                    <p class="text-sm font-bold uppercase tracking-widest">Marcus S.</p>
+                                    <p class="text-xs text-gray-500 font-bold uppercase">PE Analyst</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 (Brief) -->
+                    <div class="testimonial-slide">
+                        <div class="glass-card p-10 rounded-3xl h-full flex flex-col justify-center cursor-default">
+                            <p class="text-2xl md:text-4xl text-white mb-8 italic font-bold leading-tight uppercase tracking-tighter">
+                                "Vita is like a coach in my pocket. No fluff, just results."
+                            </p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold uppercase">TR</div>
+                                <div>
+                                    <p class="text-sm font-bold uppercase tracking-widest">Tom R.</p>
+                                    <p class="text-xs text-gray-500 font-bold uppercase">Athlete</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex justify-center md:justify-start gap-4">
+                <button onclick="moveSlide(-1)" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button onclick="moveSlide(1)" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Why Vita is Different -->
+    <section class="py-32 px-6 bg-white text-black overflow-hidden">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+            <div class="relative">
+                <div class="text-[12rem] font-black text-black/5 absolute -top-20 -left-10 select-none uppercase">VITA</div>
+                <h2 class="text-5xl md:text-7xl font-black mb-8 uppercase spaced-header leading-none relative">Beyond<br>The Badge.</h2>
+                <div class="space-y-6 text-xl text-gray-700">
+                    <p>Standard fitness apps give you a badge for hitting steps. <span class="font-bold text-black italic">Vita</span> gives you a competitive advantage.</p>
+                    <p>We provide the 1% of direction that yields 99% of your growth. Professional-grade guidance, simplified.</p>
+                </div>
+            </div>
+            <div class="aspect-[4/5] bg-black rounded-[40px] flex flex-col items-center justify-center p-12 text-white border-8 border-zinc-200 shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                <div class="text-6xl brand-text mb-4 italic">VITA</div>
+                <div class="w-16 h-1 bg-white/20 mb-8"></div>
+                <div class="space-y-4 w-full opacity-20">
+                    <div class="h-4 bg-white rounded-full w-3/4"></div>
+                    <div class="h-4 bg-white rounded-full w-full"></div>
+                    <div class="h-4 bg-white rounded-full w-1/2"></div>
+                </div>
+                <div class="mt-auto text-xs tracking-widest font-bold uppercase opacity-50">Precision Guidance System</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Final CTA Section -->
+    <section class="py-40 px-6 bg-black text-white text-center relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-2xl brand-text mb-6 italic opacity-50 tracking-[0.5em] uppercase">VITA</div>
+            <h2 class="text-6xl md:text-9xl font-black mb-8 uppercase spaced-header">Limitless Begins Now.</h2>
+            <p class="text-xl md:text-2xl mb-12 text-gray-400 max-w-xl mx-auto font-medium">Join the 2026 Beta. Move from generic health to elite performance.</p>
+            
+            <form onsubmit="return false;" class="flex flex-col md:flex-row gap-3 w-full max-w-lg mx-auto mb-6">
+                <input type="email" placeholder="e.g. alex@performance.com" required
+                    class="flex-1 bg-white/5 border border-white/20 px-6 py-5 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-white/40 transition-all text-white">
+                <button type="submit" 
+                    class="cta-button bg-white text-black font-black px-10 py-5 rounded-2xl text-lg whitespace-nowrap uppercase italic">
+                    Start with Vita
+                </button>
+            </form>
+            <p class="text-xs text-gray-600 font-bold tracking-widest uppercase text-center">No Spam. Private Cohort. 2026 Access.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 text-center border-t border-white/5">
+        <div class="text-xl brand-text mb-6 uppercase">VITA</div>
+        <div class="text-[10px] tracking-[0.3em] text-gray-600 uppercase font-bold">
+            © 2026 Vita Performance Systems. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const container = document.getElementById('testimonialContainer');
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const totalSlides = slides.length;
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            const offset = currentSlide * 100;
+            container.style.transform = `translateX(-${offset}%)`;
+        }
+    </script>
+
+</body>
+</html>

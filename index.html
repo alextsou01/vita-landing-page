@@ -51,6 +51,11 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
+        .cta-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
         input::placeholder {
             color: #636366;
         }
@@ -70,7 +75,15 @@
         }
         .testimonial-slide {
             min-width: 100%;
-            padding: 20px 10px; /* Added padding to prevent hover clip */
+            padding: 20px 10px;
+        }
+        .success-message {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -86,11 +99,9 @@
 
     <!-- 1. Hero Section -->
     <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 px-6 text-center overflow-hidden">
-        <!-- Background Glow -->
         <div class="absolute w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] -z-10 top-1/4"></div>
         
         <div class="max-w-5xl mx-auto">
-            <!-- Adjusted top margin (mt-12) -->
             <div class="mb-6 mt-12 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] md:text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">
                 <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> Personal Performance Architecture
             </div>
@@ -101,14 +112,21 @@
                 <span class="text-white font-semibold italic">Vita</span> is the personalized guidance system that translates your body's signals into one simple, elite daily plan.
             </p>
 
-            <form onsubmit="return false;" class="flex flex-col md:flex-row gap-3 w-full max-w-lg mx-auto mb-6" id="early-access">
-                <input type="email" placeholder="Enter your email address" required
-                    class="flex-1 bg-white/5 border border-white/10 px-6 py-5 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-white/20 transition-all">
-                <button type="submit" 
-                    class="cta-button bg-white text-black font-black px-10 py-5 rounded-2xl text-lg whitespace-nowrap uppercase tracking-tight">
-                    Start with Vita
-                </button>
-            </form>
+            <!-- Hero Form -->
+            <div id="hero-form-container">
+                <form id="hero-form" action="https://formspree.io/f/mpqkvrzd" method="POST" class="flex flex-col md:flex-row gap-3 w-full max-w-lg mx-auto mb-6">
+                    <input type="email" name="email" placeholder="Enter your email address" required
+                        class="flex-1 bg-white/5 border border-white/10 px-6 py-5 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-white/20 transition-all">
+                    <button type="submit" 
+                        class="cta-button bg-white text-black font-black px-10 py-5 rounded-2xl text-lg whitespace-nowrap uppercase tracking-tight">
+                        Start with Vita
+                    </button>
+                </form>
+                <div id="hero-success" class="success-message text-white font-bold italic text-lg py-4">
+                    ✓ Welcome to the cohort. Check your inbox soon.
+                </div>
+            </div>
+            
             <p class="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold text-center">Secure your place in the 2026 performance cohort.</p>
         </div>
     </section>
@@ -131,7 +149,7 @@
         </div>
     </section>
 
-    <!-- 3. How It Works (Hover cards) -->
+    <!-- 3. How It Works -->
     <section class="py-32 px-6 bg-zinc-900/50">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl md:text-5xl font-bold mb-20 text-center uppercase spaced-header">The Vita System</h2>
@@ -163,11 +181,8 @@
                 <p class="text-gray-400 font-medium uppercase tracking-widest text-sm">Real feedback. Zero fluff.</p>
             </div>
 
-            <!-- Slider Wrapper -->
             <div class="overflow-hidden mb-8">
                 <div class="testimonial-container" id="testimonialContainer">
-                    
-                    <!-- Slide 1 -->
                     <div class="testimonial-slide">
                         <div class="glass-card p-10 rounded-3xl h-full cursor-default">
                             <p class="text-xl md:text-2xl text-gray-200 mb-8 italic leading-relaxed font-light">
@@ -182,8 +197,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Slide 2 (Brief) -->
                     <div class="testimonial-slide">
                         <div class="glass-card p-10 rounded-3xl h-full flex flex-col justify-center cursor-default">
                             <p class="text-2xl md:text-4xl text-white mb-8 italic font-bold leading-tight uppercase tracking-tighter">
@@ -198,12 +211,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Slide 3 -->
                     <div class="testimonial-slide">
                         <div class="glass-card p-10 rounded-3xl h-full cursor-default">
                             <p class="text-xl md:text-2xl text-gray-200 mb-8 italic leading-relaxed font-light">
-                                "Used to spend 20 minutes looking at sleep graphs without knowing what it meant. Now I get a 3-sentence instruction in the morning and I'm done. I feel 10x better daily."
+                                "Used to spend 20 minutes looking at sleep graphs without knowing what it meant. Now I get a 3-sentence instruction in the morning and I'm done."
                             </p>
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold uppercase">MS</div>
@@ -214,27 +225,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Slide 4 (Brief) -->
-                    <div class="testimonial-slide">
-                        <div class="glass-card p-10 rounded-3xl h-full flex flex-col justify-center cursor-default">
-                            <p class="text-2xl md:text-4xl text-white mb-8 italic font-bold leading-tight uppercase tracking-tighter">
-                                "Vita is like a coach in my pocket. No fluff, just results."
-                            </p>
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold uppercase">TR</div>
-                                <div>
-                                    <p class="text-sm font-bold uppercase tracking-widest">Tom R.</p>
-                                    <p class="text-xs text-gray-500 font-bold uppercase">Athlete</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
-            <!-- Controls -->
             <div class="flex justify-center md:justify-start gap-4">
                 <button onclick="moveSlide(-1)" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -271,20 +264,27 @@
     </section>
 
     <!-- 6. Final CTA Section -->
-    <section class="py-40 px-6 bg-black text-white text-center relative">
+    <section id="early-access" class="py-40 px-6 bg-black text-white text-center relative">
         <div class="max-w-4xl mx-auto">
             <div class="text-2xl brand-text mb-6 italic opacity-50 tracking-[0.5em] uppercase">VITA</div>
             <h2 class="text-6xl md:text-9xl font-black mb-8 uppercase spaced-header">Limitless Begins Now.</h2>
             <p class="text-xl md:text-2xl mb-12 text-gray-400 max-w-xl mx-auto font-medium">Join the 2026 Beta. Move from generic health to elite performance.</p>
             
-            <form onsubmit="return false;" class="flex flex-col md:flex-row gap-3 w-full max-w-lg mx-auto mb-6">
-                <input type="email" placeholder="e.g. alex@performance.com" required
-                    class="flex-1 bg-white/5 border border-white/20 px-6 py-5 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-white/40 transition-all text-white">
-                <button type="submit" 
-                    class="cta-button bg-white text-black font-black px-10 py-5 rounded-2xl text-lg whitespace-nowrap uppercase italic">
-                    Start with Vita
-                </button>
-            </form>
+            <!-- Footer Form -->
+            <div id="footer-form-container">
+                <form id="footer-form" action="https://formspree.io/f/mpqkvrzd" method="POST" class="flex flex-col md:flex-row gap-3 w-full max-w-lg mx-auto mb-6">
+                    <input type="email" name="email" placeholder="e.g. alex@performance.com" required
+                        class="flex-1 bg-white/5 border border-white/20 px-6 py-5 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-white/40 transition-all text-white">
+                    <button type="submit" 
+                        class="cta-button bg-white text-black font-black px-10 py-5 rounded-2xl text-lg whitespace-nowrap uppercase italic">
+                        Start with Vita
+                    </button>
+                </form>
+                <div id="footer-success" class="success-message text-white font-bold italic text-lg py-4">
+                    ✓ You're on the list. 2026 starts here.
+                </div>
+            </div>
+            
             <p class="text-xs text-gray-600 font-bold tracking-widest uppercase text-center">No Spam. Private Cohort. 2026 Access.</p>
         </div>
     </section>
@@ -298,6 +298,7 @@
     </footer>
 
     <script>
+        // Testimonial Slider
         let currentSlide = 0;
         const container = document.getElementById('testimonialContainer');
         const slides = document.querySelectorAll('.testimonial-slide');
@@ -308,6 +309,45 @@
             const offset = currentSlide * 100;
             container.style.transform = `translateX(-${offset}%)`;
         }
+
+        // AJAX Form Submission (Modern way, avoids redirect)
+        async function handleFormSubmit(formId, successId) {
+            const form = document.getElementById(formId);
+            const successMsg = document.getElementById(successId);
+            const button = form.querySelector('button');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                button.disabled = true;
+                const originalText = button.innerText;
+                button.innerText = "SINCING...";
+
+                const data = new FormData(form);
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: data,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        form.style.display = "none";
+                        successMsg.style.display = "block";
+                    } else {
+                        throw new Error('Submission failed');
+                    }
+                } catch (error) {
+                    button.disabled = false;
+                    button.innerText = "RETRY";
+                }
+            });
+        }
+
+        handleFormSubmit('hero-form', 'hero-success');
+        handleFormSubmit('footer-form', 'footer-success');
     </script>
 
 </body>

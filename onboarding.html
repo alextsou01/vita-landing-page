@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vita | Build Your Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-obsidian: #0A0A0B;
+            --brand-silk: #F8F9FA;
+            --brand-accent: #E2E8F0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--brand-obsidian);
+            color: white;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .step-container {
+            display: none;
+            animation: fadeIn 0.6s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+        .step-container.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar {
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .option-card.selected {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+        .input-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .input-pill:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .physique-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .physique-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .physique-option img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            filter: grayscale(100%) brightness(0.7);
+            transition: all 0.3s ease;
+        }
+        .physique-option.selected {
+            background: white;
+            color: black;
+            border-color: white;
+            transform: scale(1.02);
+        }
+        .physique-option.selected img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .brand-nav {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--brand-obsidian);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 2.25rem;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            color: white;
+            text-transform: uppercase;
+            justify-self: start;
+        }
+        .nav-slogan {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            justify-self: center;
+        }
+        .step-counter-nav {
+            font-size: 10px;
+            font-weight: 800;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            justify-self: end;
+            margin-right: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .brand-nav {
+                grid-template-columns: 1fr auto;
+                padding: 16px 20px;
+            }
+            .nav-slogan { display: none; }
+            .step-counter-nav { margin-right: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav class="brand-nav">
+        <span class="nav-logo">VITA</span>
+        <span class="nav-slogan">Data is noise, vita is direction</span>
+        <div class="step-counter-nav" id="stepCounter">Step 1 of 12</div>
+    </nav>
+
+    <div class="w-full h-1 bg-white/5 overflow-hidden">
+        <div id="progressBar" class="h-full bg-white progress-bar" style="width: 8.33%;"></div>
+    </div>
+
+    <main class="flex-grow flex items-start justify-center p-6 pb-48 pt-12">
+        <div class="w-full max-w-[500px]">
+            
+            <header class="text-left mb-10" id="headerText">
+                <h1 class="text-3xl font-bold mb-3">Build Your Plan</h1>
+                <p id="welcome-subtext" class="text-gray-400 text-sm font-light">Let's get to know your body and habits.</p>
+            </header>
+
+            <form id="onboardingForm">
+                <!-- STEP 1: BASICS -->
+                <section id="step1" class="step-container active">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white mb-2">The Basics</label>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">How old are you?</label>
+                            <input type="number" id="input-age" placeholder="Years" class="input-pill w-full px-5 py-4 rounded-2xl text-lg">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-3">Height (cm)</label>
+                                <input type="text" id="input-height" placeholder="180" class="input-pill w-full px-5 py-4 rounded-2xl text-lg">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-3">Weight (kg)</label>
+                                <input type="text" id="input-weight" placeholder="75" class="input-pill w-full px-5 py-4 rounded-2xl text-lg">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 2: EATING HABITS -->
+                <section id="step2" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">How long before bed do you usually eat?</label>
+                        <div class="grid gap-3" data-key="eating_habit">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Right before bed</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">1–2 hours</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">3+ hours</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 3: ENERGY PEAK -->
+                <section id="step3" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">When is your energy at its highest?</label>
+                        <div class="grid gap-3" data-key="energy_peak">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Morning</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Afternoon</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Evening</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 4: RESTED DAYS -->
+                <section id="step4" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">How many days a week do you wake up well-rested?</label>
+                        <div class="grid grid-cols-4 gap-2" data-key="rested_days">
+                            <div class="option-card py-5 rounded-xl text-center" onclick="selectOption(this)">0-1</div>
+                            <div class="option-card py-5 rounded-xl text-center selected" onclick="selectOption(this)">2-3</div>
+                            <div class="option-card py-5 rounded-xl text-center" onclick="selectOption(this)">4-5</div>
+                            <div class="option-card py-5 rounded-xl text-center" onclick="selectOption(this)">6-7</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 5: CAFFEINE -->
+                <section id="step5" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">How much caffeine do you have daily?</label>
+                        <div class="grid gap-3" data-key="caffeine">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">None</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">1-2 cups</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">3+ cups</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 6: INJURIES -->
+                <section id="step6" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">Do you have any old injuries or tight areas?</label>
+                        <div class="grid grid-cols-2 gap-3" id="injuries-group">
+                            <div class="option-card p-4 rounded-2xl text-sm" onclick="toggleMulti(this)">Lower Back</div>
+                            <div class="option-card p-4 rounded-2xl text-sm" onclick="toggleMulti(this)">Knees</div>
+                            <div class="option-card p-4 rounded-2xl text-sm" onclick="toggleMulti(this)">Neck/Shoulders</div>
+                            <div class="option-card p-4 rounded-2xl text-sm" onclick="toggleMulti(this)">None</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 7: STRESS -->
+                <section id="step7" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">How stressed do you feel lately?</label>
+                        <div class="grid gap-3" data-key="stress">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Low / Calm</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">Moderate / Busy</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">High Pressure</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 8: HURDLE -->
+                <section id="step8" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">What is your biggest hurdle to staying healthy?</label>
+                        <div class="grid gap-3" data-key="hurdle">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Finding Time</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Lack of a plan</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">Consistency</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 9: WATER -->
+                <section id="step9" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">How much water do you drink daily?</label>
+                        <div class="grid gap-3" data-key="water">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Less than 1L</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">1-2L</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">More than 2L</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 10: GOAL -->
+                <section id="step10" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">What is your main goal for the next 90 days?</label>
+                        <div class="grid gap-3" id="goals-group">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Weight Loss</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">Muscle Gain</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Energy Optimization</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 11: COMMITMENT -->
+                <section id="step11" class="step-container">
+                    <div class="space-y-6">
+                        <label class="block text-sm font-bold text-white">How much time can you commit per week?</label>
+                        <div class="grid gap-3" data-key="commitment">
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">Minimal (< 2h)</div>
+                            <div class="option-card p-5 rounded-2xl selected" onclick="selectOption(this)">Ready (3-5h)</div>
+                            <div class="option-card p-5 rounded-2xl" onclick="selectOption(this)">All in (Daily)</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 12: PHYSIQUE -->
+                <section id="step12" class="step-container">
+                    <div class="space-y-8">
+                        <div class="text-center">
+                            <h2 class="text-2xl font-bold outfit mb-2">Select Your Physique</h2>
+                            <p class="text-sm text-gray-500">Pick the profile that best describes you today.</p>
+                        </div>
+                        
+                        <div class="physique-grid" id="physique-group">
+                            <div class="physique-option" onclick="selectPhysique(this)">
+                                <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&q=80&w=300" alt="Underweight">
+                                <span class="text-xs font-bold uppercase tracking-widest">Underweight</span>
+                            </div>
+                            <div class="physique-option selected" onclick="selectPhysique(this)">
+                                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=300" alt="Athletic">
+                                <span class="text-xs font-bold uppercase tracking-widest">Athletic</span>
+                            </div>
+                            <div class="physique-option" onclick="selectPhysique(this)">
+                                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&q=80&w=300" alt="Fuller">
+                                <span class="text-xs font-bold uppercase tracking-widest">Chubby</span>
+                            </div>
+                            <div class="physique-option" onclick="selectPhysique(this)">
+                                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300" alt="Large">
+                                <span class="text-xs font-bold uppercase tracking-widest">Obese</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Additional Details</label>
+                            <textarea id="additional-info" placeholder="Any special needs..." rows="2" class="input-pill w-full px-5 py-4 rounded-2xl text-base resize-none"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="finalStep" class="step-container text-center py-10">
+                    <div id="calculating" class="space-y-6">
+                        <div class="flex justify-center"><div class="spinner"></div></div>
+                        <p class="text-xl font-bold italic outfit">Synthesizing your ✨ AI Blueprint...</p>
+                    </div>
+                    <div id="finished" class="hidden space-y-6">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <h2 class="text-3xl font-bold uppercase italic outfit">Blueprint Ready.</h2>
+                        <div id="aiBlueprintSummary" class="bg-white/5 border border-white/10 rounded-2xl p-6 text-left text-sm leading-relaxed text-gray-300"></div>
+                        <a href="/" class="block w-full bg-white text-black font-black px-6 py-4 rounded-2xl text-lg uppercase mt-6">Launch Dashboard</a>
+                    </div>
+                </section>
+
+                <div id="navButtons" class="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black to-transparent z-20">
+                    <div class="max-w-[500px] mx-auto flex gap-3">
+                        <button type="button" id="backBtn" class="hidden flex-1 border border-white/10 text-white font-bold px-6 py-4 rounded-2xl text-lg transition-all active:scale-95">Back</button>
+                        <button type="button" id="continueBtn" class="flex-[2] bg-white text-black font-black px-6 py-4 rounded-2xl text-lg uppercase tracking-tight transition-all active:scale-95">Continue</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const apiKey = ""; 
+        let currentStep = 1;
+        const totalSteps = 12;
+        const progressBar = document.getElementById('progressBar');
+        const stepCounter = document.getElementById('stepCounter');
+        const continueBtn = document.getElementById('continueBtn');
+        const backBtn = document.getElementById('backBtn');
+        const navButtons = document.getElementById('navButtons');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userEmail = urlParams.get('email');
+        if (userEmail) {
+            document.getElementById('welcome-subtext').innerText = `Welcome, ${userEmail.split('@')[0]}. Let's build your architecture.`;
+        }
+
+        async function callGemini(prompt, systemPrompt = "") {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: systemPrompt ? { parts: [{ text: systemPrompt }] } : undefined
+            };
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (e) {
+                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+                }
+            }
+            return "Unable to connect.";
+        }
+
+        function collectFormData() {
+            const data = {
+                email: userEmail,
+                age: document.getElementById('input-age')?.value,
+                height: document.getElementById('input-height')?.value,
+                weight: document.getElementById('input-weight')?.value,
+                physique: document.querySelector('#physique-group .selected span')?.innerText || 'Athletic'
+            };
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                data[key] = el.querySelector('.selected')?.innerText || 'Not set';
+            });
+            return data;
+        }
+
+        async function generateFinalBlueprint() {
+            const data = collectFormData();
+            const summaryContainer = document.getElementById('aiBlueprintSummary');
+            const prompt = `Create a custom performance plan for ${data.email || 'the user'}. Goal: ${data.goal}. Bio: ${data.age} years, ${data.weight}kg. Physique: ${data.physique}. Focus on bio-alignment.`;
+            const result = await callGemini(prompt, "You are Vita. Create a professional performance summary using bold headers.");
+            summaryContainer.innerHTML = result.replace(/\n/g, '<br>');
+            document.getElementById('calculating').classList.add('hidden');
+            document.getElementById('finished').classList.remove('hidden');
+        }
+
+        function updateUI() {
+            document.querySelectorAll('.step-container').forEach(step => step.classList.remove('active'));
+            const activeStep = document.getElementById(currentStep <= totalSteps ? `step${currentStep}` : 'finalStep');
+            if (activeStep) activeStep.classList.add('active');
+
+            progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            stepCounter.innerText = currentStep <= totalSteps ? `Step ${currentStep} of ${totalSteps}` : 'Complete';
+
+            backBtn.classList.toggle('hidden', currentStep === 1);
+            if (currentStep > totalSteps) {
+                navButtons.classList.add('hidden');
+                generateFinalBlueprint();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.selectOption = function(el) {
+            el.parentNode.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+        window.toggleMulti = function(el) { el.classList.toggle('selected'); }
+        window.selectPhysique = function(el) {
+            document.querySelectorAll('.physique-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        continueBtn.addEventListener('click', () => { if (currentStep <= totalSteps) { currentStep++; updateUI(); } });
+        backBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateUI(); } });
+
+        updateUI();
+    </script>
+</body>
+</html>

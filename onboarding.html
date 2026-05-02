@@ -471,8 +471,25 @@
             el.classList.add('selected');
         }
 
-        continueBtn.addEventListener('click', () => { if (currentStep <= totalSteps) { currentStep++; updateUI(); } });
-        backBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateUI(); } });
+        continueBtn.addEventListener('click', (e) => { 
+            e.preventDefault();
+            if (currentStep <= totalSteps) { 
+                currentStep++; 
+                updateUI(); 
+            } 
+        });
+        
+        backBtn.addEventListener('click', (e) => { 
+            e.preventDefault();
+            if (currentStep > 1) { 
+                currentStep--; 
+                updateUI(); 
+            } 
+        });
+
+        document.getElementById('onboardingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+        });
 
         updateUI();
     </script>
